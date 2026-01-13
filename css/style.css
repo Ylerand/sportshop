@@ -1,0 +1,21 @@
+.Encabezado-final {
+    text-align: center;
+    padding: 15px;
+    background: black;
+    color: white;
+    margin-top: 1%;
+}
+
+.header-arriba {
+    text-align: center;
+    padding: 30px;
+    background: black;
+    color: white;
+    margin-top: 1%;
+}
+
+/proyecto
+ ├── index.html
+ ├── styles.css
+ └── images/
+      └── logo.sportshop.png
