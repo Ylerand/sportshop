@@ -7,15 +7,100 @@
 }
 
 .header-arriba {
-    text-align: center;
-    padding: 30px;
-    background: black;
-    color: white;
-    margin-top: 1%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  padding: 10px 40px;
+}
+.logo {
+  width: 180px;
 }
 
-/proyecto
- ├── index.html
- ├── styles.css
- └── images/
-      └── logo.sportshop.png
+.header {
+  background-color: #000;
+  background-image: url("logo.sportshop.PNG");
+  background-repeat: no-repeat;
+  background-position: left 30px center;
+  background-size: 180px auto;
+  height: 100px;
+}
+
+.buscar-form input {
+  padding: 15px 60px;
+  border-radius: 10px;
+  border: none;
+  width: 600px;
+  outline: none;
+}
+
+.buscar-form button {
+  padding: 8px 16px;
+  background-color: #FFD700; /* dorado */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buscar-form button:hover {
+  background-color: #FFC107;
+}
+
+
+
+
+/* HEADER */
+.menu-principal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Logo a la izquierda, botones a la derecha */
+    background-color: #222;
+    padding: 10px 20px;
+}
+
+/* Logo */
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ff6b00;
+}
+
+/* Contenedor de botones del menú */
+.menu-botones {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacio entre los botones */
+}
+
+/* Botones del menú */
+.menu-btn {
+    padding: 6px 12px;
+    background-color: #007BFF; /* Mismo color que botón Buscar */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.menu-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Botón Iniciar sesión */
+.iniciar-sesion {
+    padding: 6px 12px;
+    background-color: #28a745; /* Verde para diferenciar */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.iniciar-sesion:hover {
+    background-color: #218838;
+}
+
+
+
