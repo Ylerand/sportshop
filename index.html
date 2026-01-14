@@ -1,69 +1,330 @@
 <!DOCTYPE html>
-<html lang="esp">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPORT SHOP</title>
-    
-    <link rel="stylesheet" href="css/style.css">
+    <title>Sport Shop - Tienda Completa</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* 1. CONFIGURACIÓN BÁSICA */
+        html { scroll-behavior: smooth; }
+        :root { --naranja: #ff4500; --negro: #222; --gris-claro: #f4f4f4; --blanco: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--gris-claro); color: var(--negro); padding-top: 80px; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* HEADER */
+        .header-arriba { background: var(--blanco); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .contenedor { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .contenedor-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        
+        .logo h1 { font-style: italic; color: var(--naranja); font-size: 2rem; }
+        .logo span { color: var(--negro); }
+
+        .buscar-form { display: flex; flex-grow: 1; max-width: 500px; }
+        .buscar-form input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; }
+        .buscar-form button { padding: 10px 20px; background: var(--naranja); color: white; border: none; cursor: pointer; border-radius: 0 4px 4px 0; }
+
+        .iconos-usuario { display: flex; gap: 20px; }
+        .item-icono { display: flex; align-items: center; gap: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .item-icono:hover { color: var(--naranja); }
+
+        /* MENU PRINCIPAL */
+        .menu-principal { background: var(--negro); text-align: center; padding: 10px 0; position: fixed; top: 76px; width: 100%; z-index: 999; }
+        .menu-btn { color: white; padding: 10px 20px; display: inline-block; text-transform: uppercase; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
+        .menu-btn:hover { background: var(--naranja); color: white; }
+
+        .banner { margin-top: 40px; }
+        .banner img { width: 100%; height: auto; max-height: 500px; object-fit: cover; }
+
+        /* SECCIONES */
+        .seccion { padding: 60px 20px; scroll-margin-top: 120px; }
+        h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; text-transform: uppercase; color: #333; border-bottom: 3px solid var(--naranja); display: inline-block; padding-bottom: 10px; }
+
+        /* GRID CATEGORIAS */
+        .grid-categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .card-categoria { background: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card-categoria:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .card-categoria img { height: 120px; margin: 0 auto 15px; object-fit: contain; }
+
+        /* GRID PRODUCTOS */
+        .grid-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
+        .producto { background: white; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #eee; transition: 0.3s; position: relative; }
+        .producto:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.1); transform: translateY(-2px); }
+        .producto img { height: 180px; margin: 0 auto 15px; object-fit: contain; }
+        .producto h3 { font-size: 1.1rem; margin-bottom: 10px; height: 50px; overflow: hidden; }
+        .precio { color: var(--naranja); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px; }
+        .btn-agregar { background: var(--negro); color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.2s; font-weight: bold; }
+        .btn-agregar:hover { background: var(--naranja); }
+
+        /* OFERTA */
+        .oferta-especial { background: linear-gradient(135deg, #222 0%, #444 100%); color: white; padding: 80px 20px; margin-top: 50px; scroll-margin-top: 100px; }
+        .contenido-oferta { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 60px; flex-wrap: wrap; }
+        .imagen-oferta img { max-width: 350px; background: white; padding: 20px; border-radius: 15px; transform: rotate(-5deg); transition: 0.5s; }
+        .imagen-oferta img:hover { transform: rotate(0deg) scale(1.05); }
+        .texto-oferta h3 { color: var(--naranja); font-size: 1.8rem; margin-bottom: 15px; }
+        .nombre-oferta { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; line-height: 1.1; }
+        .precio-oferta { font-size: 3rem; font-weight: bold; margin: 20px 0; color: #fff; }
+        .btn-comprar { background: var(--naranja); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        .btn-comprar:hover { background: white; color: var(--naranja); transform: scale(1.05); }
+
+        /* MARCAS */
+        .marcas-row { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; align-items: center; margin-top: 40px; }
+        .marcas-row img { height: 60px; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
+        .marcas-row img:hover { filter: grayscale(0%); opacity: 1; }
+
+        /* FOOTER */
+        .footer { background: #111; color: #aaa; padding-top: 60px; text-align: center; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; text-align: left; padding: 0 20px 40px 20px; }
+        .col-footer h3 { color: white; margin-bottom: 20px; }
+        .col-footer ul li { margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
+        .col-footer ul li:hover { color: var(--naranja); padding-left: 5px; }
+        .copyright { background: black; padding: 20px; font-size: 0.9rem; border-top: 1px solid #222; }
+
+        /* ================= MODAL LOGIN / REGISTRO ================= */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-contenido { background-color: #fff; margin: 5% auto; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; }
+        .cerrar-modal { position: absolute; top: 10px; right: 20px; font-size: 30px; color: #aaa; cursor: pointer; }
+        .cerrar-modal:hover { color: var(--naranja); }
+        .modal-contenido h2 { font-size: 1.5rem; margin-bottom: 20px; border: none; }
+        .modal-contenido input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-login { width: 100%; padding: 12px; background-color: var(--naranja); color: white; border: none; border-radius: 5px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-login:hover { background-color: #e03e00; }
+        .toggle-link { color: #007bff; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+        .toggle-link:hover { text-decoration: underline; }
+        .caja-toggle { margin-top: 15px; font-size: 0.8rem; color: #666; }
+        
+        /* Ocultar elementos */
+        .oculto { display: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .contenedor-header { flex-direction: column; }
+            .buscar-form { width: 100%; }
+            .menu-principal { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+            .header-arriba { position: static; }
+            body { padding-top: 0; }
+            .banner { margin-top: 0; }
+        }
+    </style>
 </head>
-<body style="background-color: gold;">
+
 <body>
 
-    
-    <header>
-        <div class="header-arriba">
-            <img src="./img/sportshop.png" alt="Logo SportShop" class="logo">
+    <header class="header-arriba" id="inicio">
+        <div class="contenedor contenedor-header">
+            <a href="#inicio" class="logo">
+                <h1>SPORT<span>SHOP</span></h1>
+            </a>
 
-            <form class="buscar-form">
-                <input type="text" placeholder="Busca los mejores productos en SportShop">
-                <button>Buscar</button>
-             </form>
+            <form class="buscar-form" onsubmit="buscarProducto(event)">
+                <input type="text" id="buscador-input" placeholder="Buscar productos...">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <div class="iconos-usuario">
+                <div class="item-icono" id="btn-ingresar" onclick="abrirModal()">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <span id="texto-usuario">Ingresar</span>
+                </div>
+                <div class="item-icono">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="texto-carrito">Carrito (0)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="menu-principal">
+        <a href="#inicio" class="menu-btn">Inicio</a>
+        <a href="#productos" class="menu-btn">Productos</a>
+        <a href="#ofertas" class="menu-btn">Ofertas</a>
+        <a href="#contacto" class="menu-btn">Contacto</a>
+    </nav>
+
+    <section class="banner">
+        <img src="img/bannerSportShop.png" alt="Banner Principal">
+    </section>
+
+    <section class="contenedor seccion">
+        <h2>Categorías</h2>
+        <div class="grid-categorias">
+            <div class="card-categoria"><img src="img/RubberHexDumbbell.png" alt="Pesas"><h3>Pesas</h3></div>
+            <div class="card-categoria"><img src="img/camiseta.png" alt="Ropa"><h3>Ropa</h3></div>
+            <div class="card-categoria"><img src="img/balones.png" alt="Balones"><h3>Balones</h3></div>
+            <div class="card-categoria"><img src="img/accesorios.png" alt="Accesorios"><h3>Accesorios</h3></div>
+        </div>
+    </section>
+
+    <section id="productos" class="contenedor seccion">
+        <h2>Más Vendidos</h2>
+        <div class="grid-productos">
+            <div class="producto">
+                <img src="img/RubberHexDumbbell.png" alt="Mancuerna Hex">
+                <h3>Rubber Hex Dumbbell</h3>
+                <p class="precio">$45.000</p>
+                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <img src="img/MancuernasDeNeopreno.png" alt="Mancuerna Neopreno">
+                <h3>Mancuerna Neopreno</h3>
+                <p class="precio">$39.000</p>
+                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <img src="img/RodilloDeRueda.png" alt="Rodillo">
+                <h3>Rodillo de Rueda</h3>
+                <p class="precio">$20.000</p>
+                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+            </div>
+            <div class="producto">
+                <img src="img/accesorios.png" alt="Kit Deportivo">
+                <h3>Kit Deportivo</h3>
+                <p class="precio">$150.000</p>
+                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="ofertas" class="oferta-especial">
+        <div class="contenido-oferta">
+            <div class="imagen-oferta">
+                <img src="img/EsterillaAntideslizante.png" alt="Oferta">
+            </div>
+            <div class="texto-oferta">
+                <h3>¡OFERTA RELÁMPAGO!</h3>
+                <p class="nombre-oferta">Esterilla Pro Antideslizante</p>
+                <p class="precio-oferta">$14.990</p>
+                <button class="btn-comprar" onclick="comprarOferta()">¡Comprar Ahora!</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="contenedor seccion">
+        <div class="marcas-row">
+            <img src="img/RodilloDeRueda.png" alt="Marca 1">
+            <img src="img/BandasElásticas.png" alt="Marca 2">
+            <img src="img/PulseraInteligente.png" alt="Marca 3">
+        </div>
+    </section>
+
+    <footer id="contacto" class="footer">
+        <div class="footer-grid">
+            <div class="col-footer"><h3>SPORT SHOP</h3><p>Calidad garantizada.</p></div>
+            <div class="col-footer"><h3>Enlaces</h3><ul><li><a href="#inicio">Inicio</a></li><li><a href="#productos">Productos</a></li></ul></div>
+            <div class="col-footer"><h3>Contacto</h3><p>Santiago, Chile</p></div>
+        </div>
+        <div class="copyright">&copy; 2026 Sport Shop.</div>
+    </footer>
+
+    <div id="miModal" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
+            
+            <div id="box-login">
+                <h2>Iniciar Sesión</h2>
+                <form onsubmit="realizarLogin(event)">
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button type="submit" class="btn-login">Entrar</button>
+                </form>
+                <div class="caja-toggle">
+                    ¿No tienes cuenta? <span class="toggle-link" onclick="mostrarRegistro()">Regístrate aquí</span>
+                </div>
             </div>
 
-            <a href="page/login.html" class="usuario-izquierda">
-                <i class="fa-regular fa-circle-user"></i> <div class="usuario-texto">
-                    
+            <div id="box-registro" class="oculto">
+                <h2>Crear Cuenta</h2>
+                <form onsubmit="realizarRegistro(event)">
+                    <input type="text" id="reg-nombre" placeholder="Nombre completo" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <button type="submit" class="btn-login" style="background-color: #333;">Registrarse</button>
+                </form>
+                <div class="caja-toggle">
+                    ¿Ya tienes cuenta? <span class="toggle-link" onclick="mostrarLogin()">Inicia sesión</span>
                 </div>
-            </a>
-            <a href="page/carrito.html" class="icono-carrito">
-                <i class="fa-solid fa-basket-shopping"></i>
-            </a>
-        </div>
-       <header class="menu-principal">
-    <div class="logo">
-        <h1>SportShop</h1>
-    </div>
-    <div class="menu-botones">
-        <a href="#" class="menu-btn">Inicio</a>
-        <a href="#" class="menu-btn">Productos</a>
-        <a href="#" class="menu-btn">Ofertas</a>
-        <a href="#" class="menu-btn">Contacto</a>
-        <a href="page/login.html" class="iniciar-sesion">Iniciar sesión</a>
-    </div>
-    </header>
-<section class="banner"> 
-    <img src="img/banner.jpg" alt="Banner de tienda" class="banner-img">
-</section>
-    <div class="titulo-inicio">
-        <h2>Categorias Populares</h2>
+            </div>
 
-         <div id="contenedor-categorias" class="categorias-grid"></div>
-        <h2>Mas vendidos</h2>
-        <div id="mas-vendidos" class="productos-inicio"></div>
-        <h2>Ofertas Destacadas</h2>
-        <div id="oferta-destacada" class="oferta-unica"></div>
-        <h2>Las Mejores Marcas</h2>
+        </div>
     </div>
-    <div class="Marcas-inicio">
-        <img src="img/Asus.jpg" alt="asus" class="asus">
-        <img src="img/gigabyte.jpg" alt="gigabyte" class="gigabyte">
-        <img src="img/Kingston.jpg" alt="kingston" class="kingston">
-        <img src="img/msi.jpg" alt="msi" class="msi">
-    </div>
-    <footer class="Encabezado-final">
-        <p>&copy; 2026 SPORT SHOP - Todos los derechos reservados</p>
-    </footer>
-    <script src="js/productos.js"></script>
+
+    <script>
+        // 1. CARRITO Y PRODUCTOS
+        let contador = 0;
+        function agregarAlCarrito(boton) {
+            contador++;
+            document.getElementById("texto-carrito").innerText = "Carrito (" + contador + ")";
+            let texto = boton.innerText;
+            boton.innerText = "¡Agregado! ✔";
+            boton.style.backgroundColor = "#28a745";
+            setTimeout(() => { boton.innerText = texto; boton.style.backgroundColor = ""; }, 1000);
+        }
+
+        function comprarOferta() {
+            contador++;
+            document.getElementById("texto-carrito").innerText = "Carrito (" + contador + ")";
+            alert("¡Producto añadido al carrito!");
+        }
+
+        function buscarProducto(e) {
+            e.preventDefault();
+            let val = document.getElementById("buscador-input").value;
+            if(val.trim() !== "") {
+                alert("Buscando: " + val);
+                document.getElementById("buscador-input").value = "";
+                window.location.href = "#productos";
+            }
+        }
+
+        // 2. MODAL Y LOGIN/REGISTRO
+        const modal = document.getElementById("miModal");
+        const boxLogin = document.getElementById("box-login");
+        const boxRegistro = document.getElementById("box-registro");
+
+        function abrirModal() { modal.style.display = "block"; mostrarLogin(); }
+        function cerrarModal() { modal.style.display = "none"; }
+        window.onclick = function(e) { if (e.target == modal) cerrarModal(); }
+
+        // Cambiar entre formularios
+        function mostrarRegistro() {
+            boxLogin.style.display = "none";
+            boxRegistro.style.display = "block";
+        }
+
+        function mostrarLogin() {
+            boxRegistro.style.display = "none";
+            boxLogin.style.display = "block";
+        }
+
+        // Simular Login
+        function realizarLogin(e) {
+            e.preventDefault();
+            alert("¡Bienvenido de nuevo!");
+            document.getElementById("texto-usuario").innerText = "Hola, Cliente";
+            document.getElementById("texto-usuario").style.color = "#ff4500";
+            cerrarModal();
+        }
+
+        // Simular Registro
+        function realizarRegistro(e) {
+            e.preventDefault();
+            // Obtener el nombre que escribió el usuario
+            let nombreUsuario = document.getElementById("reg-nombre").value;
+            
+            alert("¡Cuenta creada con éxito! Bienvenido, " + nombreUsuario);
+            
+            // Actualizar el header con el nombre real
+            document.getElementById("texto-usuario").innerText = "Hola, " + nombreUsuario.split(" ")[0]; // Solo el primer nombre
+            document.getElementById("texto-usuario").style.color = "#ff4500";
+            
+            cerrarModal();
+        }
+    </script>
+
 </body>
 </html>

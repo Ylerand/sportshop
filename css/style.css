@@ -1,106 +1,325 @@
-.Encabezado-final {
-    text-align: center;
-    padding: 15px;
-    background: black;
-    color: white;
-    margin-top: 1%;
+/* ================= VARIABLES Y RESET ================= */
+:root {
+    --naranja: #ff4500;
+    --negro: #222;
+    --gris-claro: #f4f4f4;
+    --blanco: #fff;
+    --gris-texto: #555;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--gris-claro);
+    color: var(--negro);
+}
+
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* Clase utilitaria para centrar contenido */
+.contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ================= HEADER ================= */
 .header-arriba {
-  background-color: #000;
-  display: flex;
-  align-items: center;
-  padding: 10px 40px;
-}
-.logo {
-  width: 180px;
+    background: var(--blanco);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.header {
-  background-color: #000;
-  background-image: url("logo.sportshop.PNG");
-  background-repeat: no-repeat;
-  background-position: left 30px center;
-  background-size: 180px auto;
-  height: 100px;
+.contenedor-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.buscar-form {
+    flex-grow: 1;
+    max-width: 500px;
+    display: flex;
 }
 
 .buscar-form input {
-  padding: 15px 60px;
-  border-radius: 10px;
-  border: none;
-  width: 600px;
-  outline: none;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
 }
 
 .buscar-form button {
-  padding: 8px 16px;
-  background-color: #FFD700; /* dorado */
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.buscar-form button:hover {
-  background-color: #FFC107;
-}
-
-
-
-
-/* HEADER */
-.menu-principal {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Logo a la izquierda, botones a la derecha */
-    background-color: #222;
     padding: 10px 20px;
+    background: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
 }
 
-/* Logo */
-.logo h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #ff6b00;
+.iconos-usuario {
+    display: flex;
+    gap: 20px;
 }
 
-/* Contenedor de botones del menú */
-.menu-botones {
+.item-icono {
     display: flex;
     align-items: center;
-    gap: 10px; /* Espacio entre los botones */
+    gap: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
 }
 
-/* Botones del menú */
+.item-icono:hover { color: var(--naranja); }
+
+/* ================= MENÚ ================= */
+.menu-principal {
+    background: var(--negro);
+    text-align: center;
+    padding: 10px 0;
+}
+
 .menu-btn {
-    padding: 6px 12px;
-    background-color: #007BFF; /* Mismo color que botón Buscar */
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
+    color: var(--blanco);
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    display: inline-block;
 }
 
-.menu-btn:hover {
-    background-color: #0056b3;
+.menu-btn:hover, .menu-btn.activo {
+    background: var(--naranja);
 }
 
-/* Botón Iniciar sesión */
-.iniciar-sesion {
-    padding: 6px 12px;
-    background-color: #28a745; /* Verde para diferenciar */
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
+/* ================= BANNER ================= */
+.banner img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+/* ================= SECCIONES GENERALES ================= */
+.seccion { padding: 50px 20px; }
+
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+/* ================= CATEGORÍAS ================= */
+.grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card-categoria {
+    background: var(--blanco);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+
+.card-categoria:hover { transform: translateY(-5px); }
+
+.card-categoria img {
+    height: 120px;
+    margin: 0 auto 15px;
+    object-fit: contain;
+}
+
+/* ================= PRODUCTOS ================= */
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.producto {
+    background: var(--blanco);
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: box-shadow 0.3s;
+}
+
+.producto:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+
+.producto img {
+    height: 180px;
+    margin: 0 auto 15px;
+    object-fit: contain;
+}
+
+.producto h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    height: 40px; /* Altura fija para alinear */
+    overflow: hidden;
+}
+
+.precio {
+    color: var(--naranja);
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
 }
 
-.iniciar-sesion:hover {
-    background-color: #218838;
+.btn-agregar {
+    background: var(--negro);
+    color: var(--blanco);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
+.btn-agregar:hover { background: var(--naranja); }
 
+/* ================= OFERTA ESPECIAL ================= */
+.oferta-especial {
+    background: linear-gradient(45deg, #111, #333);
+    color: var(--blanco);
+    padding: 60px 20px;
+    margin-top: 50px;
+}
 
+.contenido-oferta {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.imagen-oferta img {
+    max-width: 300px;
+    background: var(--blanco);
+    padding: 20px;
+    border-radius: 10px;
+    transform: rotate(-10deg);
+}
+
+.texto-oferta { text-align: left; }
+
+.texto-oferta h3 {
+    text-align: left;
+    color: var(--naranja);
+    margin-bottom: 10px;
+}
+
+.nombre-producto {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.precio-viejo {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.precio-nuevo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--blanco);
+    margin-bottom: 20px;
+}
+
+.btn-comprar {
+    padding: 12px 30px;
+    background: var(--naranja);
+    color: var(--blanco);
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ================= MARCAS ================= */
+.marcas-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.marcas-row img {
+    height: 60px;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.marcas-row img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    background: #111;
+    color: #aaa;
+    padding-top: 50px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    padding-bottom: 40px;
+}
+
+.col-footer h3, .col-footer h4 {
+    color: var(--blanco);
+    margin-bottom: 20px;
+}
+
+.col-footer ul li { margin-bottom: 10px; }
+.col-footer ul li a:hover { color: var(--naranja); }
+
+.copyright {
+    background: #000;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    border-top: 1px solid #222;
+}
+
+/* ================= RESPONSIVE (Móvil) ================= */
+@media (max-width: 768px) {
+    .contenedor-header {
+        flex-direction: column;
+    }
+    
+    .buscar-form { width: 100%; }
+    
+    .texto-oferta { text-align: center; }
+    .texto-oferta h3 { text-align: center; }
+}
