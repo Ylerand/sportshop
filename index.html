@@ -3,328 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sport Shop - Tienda Completa</title>
-
+    <title>Sport Shop Pro | Tienda Oficial</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <script src="https://sdk.mercadopago.com/js/v2"></script> <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    
     <style>
-        /* 1. CONFIGURACIÓN BÁSICA */
-        html { scroll-behavior: smooth; }
-        :root { --naranja: #ff4500; --negro: #222; --gris-claro: #f4f4f4; --blanco: #fff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--gris-claro); color: var(--negro); padding-top: 80px; }
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; }
+        :root { 
+            --naranja: #ff4500; 
+            --negro: #1a1a1a; 
+            --gris-fondo: #f8f9fa; 
+            --blanco: #ffffff;
+            --exito: #28a745;
+        }
 
-        /* HEADER */
-        .header-arriba { background: var(--blanco); padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .contenedor { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .contenedor-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background-color: var(--gris-fondo); color: var(--negro); line-height: 1.6; }
         
-        .logo h1 { font-style: italic; color: var(--naranja); font-size: 2rem; }
+        .contenedor { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header Estilo Apple/Sport */
+        .header-main { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 15px 0; 
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
+            position: fixed; top: 0; width: 100%; z-index: 1000; 
+        }
+        
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 900; font-style: italic; color: var(--naranja); text-decoration: none; }
         .logo span { color: var(--negro); }
 
-        .buscar-form { display: flex; flex-grow: 1; max-width: 500px; }
-        .buscar-form input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; }
-        .buscar-form button { padding: 10px 20px; background: var(--naranja); color: white; border: none; cursor: pointer; border-radius: 0 4px 4px 0; }
-
-        .iconos-usuario { display: flex; gap: 20px; }
-        .item-icono { display: flex; align-items: center; gap: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .item-icono:hover { color: var(--naranja); }
-
-        /* MENU PRINCIPAL */
-        .menu-principal { background: var(--negro); text-align: center; padding: 10px 0; position: fixed; top: 76px; width: 100%; z-index: 999; }
-        .menu-btn { color: white; padding: 10px 20px; display: inline-block; text-transform: uppercase; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
-        .menu-btn:hover { background: var(--naranja); color: white; }
-
-        .banner { margin-top: 40px; }
-        .banner img { width: 100%; height: auto; max-height: 500px; object-fit: cover; }
-
-        /* SECCIONES */
-        .seccion { padding: 60px 20px; scroll-margin-top: 120px; }
-        h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; text-transform: uppercase; color: #333; border-bottom: 3px solid var(--naranja); display: inline-block; padding-bottom: 10px; }
-
-        /* GRID CATEGORIAS */
-        .grid-categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .card-categoria { background: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
-        .card-categoria:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .card-categoria img { height: 120px; margin: 0 auto 15px; object-fit: contain; }
-
-        /* GRID PRODUCTOS */
-        .grid-productos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; }
-        .producto { background: white; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #eee; transition: 0.3s; position: relative; }
-        .producto:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.1); transform: translateY(-2px); }
-        .producto img { height: 180px; margin: 0 auto 15px; object-fit: contain; }
-        .producto h3 { font-size: 1.1rem; margin-bottom: 10px; height: 50px; overflow: hidden; }
-        .precio { color: var(--naranja); font-weight: bold; font-size: 1.3rem; margin-bottom: 15px; }
-        .btn-agregar { background: var(--negro); color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; transition: 0.2s; font-weight: bold; }
-        .btn-agregar:hover { background: var(--naranja); }
-
-        /* OFERTA */
-        .oferta-especial { background: linear-gradient(135deg, #222 0%, #444 100%); color: white; padding: 80px 20px; margin-top: 50px; scroll-margin-top: 100px; }
-        .contenido-oferta { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 60px; flex-wrap: wrap; }
-        .imagen-oferta img { max-width: 350px; background: white; padding: 20px; border-radius: 15px; transform: rotate(-5deg); transition: 0.5s; }
-        .imagen-oferta img:hover { transform: rotate(0deg) scale(1.05); }
-        .texto-oferta h3 { color: var(--naranja); font-size: 1.8rem; margin-bottom: 15px; }
-        .nombre-oferta { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; line-height: 1.1; }
-        .precio-oferta { font-size: 3rem; font-weight: bold; margin: 20px 0; color: #fff; }
-        .btn-comprar { background: var(--naranja); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; font-weight: bold; }
-        .btn-comprar:hover { background: white; color: var(--naranja); transform: scale(1.05); }
-
-        /* MARCAS */
-        .marcas-row { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; align-items: center; margin-top: 40px; }
-        .marcas-row img { height: 60px; filter: grayscale(100%); opacity: 0.5; transition: 0.3s; }
-        .marcas-row img:hover { filter: grayscale(0%); opacity: 1; }
-
-        /* FOOTER */
-        .footer { background: #111; color: #aaa; padding-top: 60px; text-align: center; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; text-align: left; padding: 0 20px 40px 20px; }
-        .col-footer h3 { color: white; margin-bottom: 20px; }
-        .col-footer ul li { margin-bottom: 10px; cursor: pointer; transition: 0.3s; }
-        .col-footer ul li:hover { color: var(--naranja); padding-left: 5px; }
-        .copyright { background: black; padding: 20px; font-size: 0.9rem; border-top: 1px solid #222; }
-
-        /* ================= MODAL LOGIN / REGISTRO ================= */
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-contenido { background-color: #fff; margin: 5% auto; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; }
-        .cerrar-modal { position: absolute; top: 10px; right: 20px; font-size: 30px; color: #aaa; cursor: pointer; }
-        .cerrar-modal:hover { color: var(--naranja); }
-        .modal-contenido h2 { font-size: 1.5rem; margin-bottom: 20px; border: none; }
-        .modal-contenido input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; }
-        .btn-login { width: 100%; padding: 12px; background-color: var(--naranja); color: white; border: none; border-radius: 5px; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-login:hover { background-color: #e03e00; }
-        .toggle-link { color: #007bff; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
-        .toggle-link:hover { text-decoration: underline; }
-        .caja-toggle { margin-top: 15px; font-size: 0.8rem; color: #666; }
-        
-        /* Ocultar elementos */
-        .oculto { display: none; }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .contenedor-header { flex-direction: column; }
-            .buscar-form { width: 100%; }
-            .menu-principal { position: static; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
-            .header-arriba { position: static; }
-            body { padding-top: 0; }
-            .banner { margin-top: 0; }
+        .search-box { flex-grow: 1; max-width: 400px; margin: 0 30px; position: relative; }
+        .search-box input { 
+            width: 100%; padding: 10px 40px 10px 15px; 
+            border: 1.5px solid #eee; border-radius: 20px; outline: none; transition: 0.3s;
         }
+        .search-box input:focus { border-color: var(--naranja); box-shadow: 0 0 10px rgba(255,69,0,0.1); }
+        .search-box i { position: absolute; right: 15px; top: 12px; color: #aaa; }
+
+        .actions { display: flex; gap: 25px; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; }
+        .badge { 
+            position: absolute; top: -10px; right: -10px; 
+            background: var(--naranja); color: white; 
+            font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; 
+        }
+
+        /* Hero Section */
+        .hero { margin-top: 80px; height: 60vh; background: #000; display: flex; align-items: center; color: white; overflow: hidden; position: relative; }
+        .hero-text { z-index: 2; padding-left: 10%; }
+        .hero-text h2 { font-size: 3.5rem; text-transform: uppercase; line-height: 1; margin-bottom: 20px; }
+        .btn-cta { background: var(--naranja); color: white; padding: 15px 35px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+
+        /* Product Grid */
+        .grid-pro { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 50px 0; }
+        .card-pro { 
+            background: white; border-radius: 15px; padding: 20px; 
+            transition: 0.4s; border: 1px solid #f0f0f0; position: relative;
+        }
+        .card-pro:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .card-pro img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
+        .card-pro h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .price-tag { color: var(--naranja); font-size: 1.4rem; font-weight: 800; display: block; margin-bottom: 15px; }
+        
+        .btn-add { 
+            width: 100%; padding: 12px; background: var(--negro); color: white; 
+            border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-add:hover { background: var(--naranja); }
+
+        /* Cart Sidebar Drawer */
+        .cart-drawer { 
+            position: fixed; right: -400px; top: 0; width: 400px; height: 100%; 
+            background: white; z-index: 2000; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            transition: 0.4s; display: flex; flex-direction: column;
+        }
+        .cart-drawer.active { right: 0; }
+        .cart-header { padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 20px; }
+        .cart-footer { padding: 25px; background: #fafafa; border-top: 1px solid #eee; }
+
+        /* Mercado Pago Button Style */
+        #wallet_container { margin-top: 15px; }
+
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; backdrop-filter: blur(3px); }
+        .overlay.active { display: block; }
+
+        @media (max-width: 768px) { .cart-drawer { width: 100%; right: -100%; } }
     </style>
 </head>
-
 <body>
 
-    <header class="header-arriba" id="inicio">
-        <div class="contenedor contenedor-header">
-            <a href="#inicio" class="logo">
-                <h1>SPORT<span>SHOP</span></h1>
-            </a>
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
-            <form class="buscar-form" onsubmit="buscarProducto(event)">
-                <input type="text" id="buscador-input" placeholder="Buscar productos...">
-                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
+    <header class="header-main">
+        <div class="contenedor nav-flex">
+            <a href="#" class="logo">SPORT<span>PRO</span></a>
+            
+            <div class="search-box">
+                <input type="text" id="main-search" placeholder="Busca tu equipo pro..." onkeyup="filtrarProductos()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
 
-            <div class="iconos-usuario">
-                <div class="item-icono" id="btn-ingresar" onclick="abrirModal()">
-                    <i class="fa-regular fa-circle-user"></i>
-                    <span id="texto-usuario">Ingresar</span>
+            <div class="actions">
+                <div class="user-action" onclick="alert('Login próximamente...')">
+                    <i class="fa-regular fa-user"></i>
                 </div>
-                <div class="item-icono">
+                <div class="cart-icon" onclick="toggleCart()">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="texto-carrito">Carrito (0)</span>
+                    <span class="badge" id="cart-count">0</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <nav class="menu-principal">
-        <a href="#inicio" class="menu-btn">Inicio</a>
-        <a href="#productos" class="menu-btn">Productos</a>
-        <a href="#ofertas" class="menu-btn">Ofertas</a>
-        <a href="#contacto" class="menu-btn">Contacto</a>
-    </nav>
-
-    <section class="banner">
-        <img src="img/bannerSportShop.png" alt="Banner Principal">
-    </section>
-
-    <section class="contenedor seccion">
-        <h2>Categorías</h2>
-        <div class="grid-categorias">
-            <div class="card-categoria"><img src="img/RubberHexDumbbell.png" alt="Pesas"><h3>Pesas</h3></div>
-            <div class="card-categoria"><img src="img/camiseta.png" alt="Ropa"><h3>Ropa</h3></div>
-            <div class="card-categoria"><img src="img/balones.png" alt="Balones"><h3>Balones</h3></div>
-            <div class="card-categoria"><img src="img/accesorios.png" alt="Accesorios"><h3>Accesorios</h3></div>
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Supera tus<br>Límites</h2>
+            <p>Equipamiento de alto rendimiento para atletas de élite.</p><br>
+            <button class="btn-cta">Ver Colección</button>
         </div>
     </section>
 
-    <section id="productos" class="contenedor seccion">
-        <h2>Más Vendidos</h2>
-        <div class="grid-productos">
-            <div class="producto">
-                <img src="img/RubberHexDumbbell.png" alt="Mancuerna Hex">
-                <h3>Rubber Hex Dumbbell</h3>
-                <p class="precio">$45.000</p>
-                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
+    <main class="contenedor">
+        <div class="grid-pro" id="product-grid">
             </div>
-            <div class="producto">
-                <img src="img/MancuernasDeNeopreno.png" alt="Mancuerna Neopreno">
-                <h3>Mancuerna Neopreno</h3>
-                <p class="precio">$39.000</p>
-                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <img src="img/RodilloDeRueda.png" alt="Rodillo">
-                <h3>Rodillo de Rueda</h3>
-                <p class="precio">$20.000</p>
-                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
-            </div>
-            <div class="producto">
-                <img src="img/accesorios.png" alt="Kit Deportivo">
-                <h3>Kit Deportivo</h3>
-                <p class="precio">$150.000</p>
-                <button class="btn-agregar" onclick="agregarAlCarrito(this)">Agregar al Carrito</button>
-            </div>
-        </div>
-    </section>
+    </main>
 
-    <section id="ofertas" class="oferta-especial">
-        <div class="contenido-oferta">
-            <div class="imagen-oferta">
-                <img src="img/EsterillaAntideslizante.png" alt="Oferta">
+    <aside class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="toggleCart()"></i>
+        </div>
+        <div class="cart-items" id="cart-items-container">
             </div>
-            <div class="texto-oferta">
-                <h3>¡OFERTA RELÁMPAGO!</h3>
-                <p class="nombre-oferta">Esterilla Pro Antideslizante</p>
-                <p class="precio-oferta">$14.990</p>
-                <button class="btn-comprar" onclick="comprarOferta()">¡Comprar Ahora!</button>
+        <div class="cart-footer">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span>Subtotal</span>
+                <span id="cart-subtotal">$0</span>
             </div>
-        </div>
-    </section>
-
-    <section class="contenedor seccion">
-        <div class="marcas-row">
-            <img src="img/RodilloDeRueda.png" alt="Marca 1">
-            <img src="img/BandasElásticas.png" alt="Marca 2">
-            <img src="img/PulseraInteligente.png" alt="Marca 3">
-        </div>
-    </section>
-
-    <footer id="contacto" class="footer">
-        <div class="footer-grid">
-            <div class="col-footer"><h3>SPORT SHOP</h3><p>Calidad garantizada.</p></div>
-            <div class="col-footer"><h3>Enlaces</h3><ul><li><a href="#inicio">Inicio</a></li><li><a href="#productos">Productos</a></li></ul></div>
-            <div class="col-footer"><h3>Contacto</h3><p>Santiago, Chile</p></div>
-        </div>
-        <div class="copyright">&copy; 2026 Sport Shop.</div>
-    </footer>
-
-    <div id="miModal" class="modal">
-        <div class="modal-contenido">
-            <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
+            <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; margin-bottom:20px;">
+                <span>Total</span>
+                <span id="cart-total">$0</span>
+            </div>
             
-            <div id="box-login">
-                <h2>Iniciar Sesión</h2>
-                <form onsubmit="realizarLogin(event)">
-                    <input type="email" placeholder="Correo electrónico" required>
-                    <input type="password" placeholder="Contraseña" required>
-                    <button type="submit" class="btn-login">Entrar</button>
-                </form>
-                <div class="caja-toggle">
-                    ¿No tienes cuenta? <span class="toggle-link" onclick="mostrarRegistro()">Regístrate aquí</span>
-                </div>
-            </div>
-
-            <div id="box-registro" class="oculto">
-                <h2>Crear Cuenta</h2>
-                <form onsubmit="realizarRegistro(event)">
-                    <input type="text" id="reg-nombre" placeholder="Nombre completo" required>
-                    <input type="email" placeholder="Correo electrónico" required>
-                    <input type="password" placeholder="Contraseña" required>
-                    <button type="submit" class="btn-login" style="background-color: #333;">Registrarse</button>
-                </form>
-                <div class="caja-toggle">
-                    ¿Ya tienes cuenta? <span class="toggle-link" onclick="mostrarLogin()">Inicia sesión</span>
-                </div>
-            </div>
-
+            <div id="wallet_container"></div>
+            <p style="font-size: 0.7rem; color: #888; text-align: center; margin-top: 10px;">Pago seguro vía Mercado Pago</p>
         </div>
-    </div>
+    </aside>
 
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        // 1. CARRITO Y PRODUCTOS
-        let contador = 0;
-        function agregarAlCarrito(boton) {
-            contador++;
-            document.getElementById("texto-carrito").innerText = "Carrito (" + contador + ")";
-            let texto = boton.innerText;
-            boton.innerText = "¡Agregado! ✔";
-            boton.style.backgroundColor = "#28a745";
-            setTimeout(() => { boton.innerText = texto; boton.style.backgroundColor = ""; }, 1000);
+        // 1. CONFIGURACIÓN DE DATOS (Centralizada)
+        const PRODUCTOS = [
+            { id: 1, nombre: "Mancuerna Hexagonal 20kg", precio: 55000, img: "https://http2.mlstatic.com/D_NQ_NP_906649-MLC44473663365_012021-O.webp", categoria: "Pesas" },
+            { id: 2, nombre: "Esterilla Yoga Pro-Grip", precio: 25000, img: "https://http2.mlstatic.com/D_NQ_NP_600570-MLC46568853860_062021-O.webp", categoria: "Accesorios" },
+            { id: 3, nombre: "Bandas de Resistencia (Kit 5)", precio: 15000, img: "https://http2.mlstatic.com/D_NQ_NP_833633-MLC45165935741_032021-O.webp", categoria: "Accesorios" },
+            { id: 4, nombre: "Balón Medicinal 5kg", precio: 32000, img: "https://http2.mlstatic.com/D_NQ_NP_753173-MLC44421838618_122020-O.webp", categoria: "Pesas" }
+        ];
+
+        let carrito = JSON.parse(localStorage.getItem('SPORT_SHOP_CART')) || [];
+
+        // 2. INICIALIZAR MERCADO PAGO
+        const mp = new MercadoPago('TU_PUBLIC_KEY_AQUI', { locale: 'es-CL' }); // Reemplaza con tu llave de Mercado Pago
+
+        // 3. RENDERIZAR PRODUCTOS
+        function renderProducts(items = PRODUCTOS) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = items.map(p => `
+                <div class="card-pro">
+                    <img src="${p.img}" alt="${p.nombre}">
+                    <h3>${p.nombre}</h3>
+                    <span class="price-tag">$${p.precio.toLocaleString('es-CL')}</span>
+                    <button class="btn-add" onclick="addToCart(${p.id})">Añadir al Carrito</button>
+                </div>
+            `).join('');
         }
 
-        function comprarOferta() {
-            contador++;
-            document.getElementById("texto-carrito").innerText = "Carrito (" + contador + ")";
-            alert("¡Producto añadido al carrito!");
-        }
+        // 4. LÓGICA DEL CARRITO
+        function addToCart(id) {
+            const producto = PRODUCTOS.find(p => p.id === id);
+            const existe = carrito.find(item => item.id === id);
 
-        function buscarProducto(e) {
-            e.preventDefault();
-            let val = document.getElementById("buscador-input").value;
-            if(val.trim() !== "") {
-                alert("Buscando: " + val);
-                document.getElementById("buscador-input").value = "";
-                window.location.href = "#productos";
+            if(existe) {
+                existe.cantidad++;
+            } else {
+                carrito.push({ ...producto, cantidad: 1 });
             }
-        }
 
-        // 2. MODAL Y LOGIN/REGISTRO
-        const modal = document.getElementById("miModal");
-        const boxLogin = document.getElementById("box-login");
-        const boxRegistro = document.getElementById("box-registro");
-
-        function abrirModal() { modal.style.display = "block"; mostrarLogin(); }
-        function cerrarModal() { modal.style.display = "none"; }
-        window.onclick = function(e) { if (e.target == modal) cerrarModal(); }
-
-        // Cambiar entre formularios
-        function mostrarRegistro() {
-            boxLogin.style.display = "none";
-            boxRegistro.style.display = "block";
-        }
-
-        function mostrarLogin() {
-            boxRegistro.style.display = "none";
-            boxLogin.style.display = "block";
-        }
-
-        // Simular Login
-        function realizarLogin(e) {
-            e.preventDefault();
-            alert("¡Bienvenido de nuevo!");
-            document.getElementById("texto-usuario").innerText = "Hola, Cliente";
-            document.getElementById("texto-usuario").style.color = "#ff4500";
-            cerrarModal();
-        }
-
-        // Simular Registro
-        function realizarRegistro(e) {
-            e.preventDefault();
-            // Obtener el nombre que escribió el usuario
-            let nombreUsuario = document.getElementById("reg-nombre").value;
+            saveAndRefresh();
             
-            alert("¡Cuenta creada con éxito! Bienvenido, " + nombreUsuario);
-            
-            // Actualizar el header con el nombre real
-            document.getElementById("texto-usuario").innerText = "Hola, " + nombreUsuario.split(" ")[0]; // Solo el primer nombre
-            document.getElementById("texto-usuario").style.color = "#ff4500";
-            
-            cerrarModal();
+            Toastify({
+                text: "🚀 Producto añadido",
+                gravity: "bottom",
+                style: { background: "linear-gradient(to right, #ff4500, #ff8c00)" }
+            }).showToast();
         }
+
+        function saveAndRefresh() {
+            localStorage.setItem('SPORT_SHOP_CART', JSON.stringify(carrito));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const totalCount = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+            const totalPrice = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+
+            document.getElementById('cart-count').innerText = totalCount;
+            document.getElementById('cart-total').innerText = `$${totalPrice.toLocaleString('es-CL')}`;
+            document.getElementById('cart-subtotal').innerText = `$${(totalPrice * 0.81).toLocaleString('es-CL')}`;
+
+            container.innerHTML = carrito.map(item => `
+                <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                    <img src="${item.img}" style="width:60px; height:60px; object-fit:contain;">
+                    <div style="flex-grow:1">
+                        <p style="font-weight:bold; font-size:0.9rem;">${item.nombre}</p>
+                        <p style="font-size:0.8rem;">${item.cantidad} x $${item.precio.toLocaleString('es-CL')}</p>
+                    </div>
+                    <i class="fa-solid fa-trash" style="color:#ff4500; cursor:pointer" onclick="removeFromCart(${item.id})"></i>
+                </div>
+            `).join('');
+            
+            if(carrito.length > 0) initMercadoPagoButton();
+        }
+
+        function removeFromCart(id) {
+            carrito = carrito.filter(i => i.id !== id);
+            saveAndRefresh();
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // 5. INTEGRACIÓN DE BOTÓN DE PAGO (SIMULACIÓN DE BACKEND)
+        async function initMercadoPagoButton() {
+            const walletContainer = document.getElementById('wallet_container');
+            walletContainer.innerHTML = ''; // Limpiar previo
+
+            // En un entorno Pro, aquí harías un fetch() a tu servidor Node.js/Python
+            // que use el SDK de Mercado Pago para crear una 'preference'.
+            
+            mp.bricks().create("wallet", "wallet_container", {
+                initialization: {
+                    preferenceId: "AQUI_VA_EL_ID_DE_TU_SERVIDOR", // Esto viene de tu backend
+                },
+                customization: {
+                    texts: { valueProp: 'smart_option' },
+                }
+            });
+        }
+
+        // 6. BUSCADOR TIEMPO REAL
+        function filtrarProductos() {
+            const query = document.getElementById('main-search').value.toLowerCase();
+            const filtrados = PRODUCTOS.filter(p => p.nombre.toLowerCase().includes(query));
+            renderProducts(filtrados);
+        }
+
+        // Carga inicial
+        window.onload = () => {
+            renderProducts();
+            updateCartUI();
+        };
     </script>
-
 </body>
 </html>
